@@ -43,6 +43,15 @@ class _FilterScreenState extends State<FilterScreen> {
     super.dispose();
   }
 
+  void _clearFilters() {
+    Navigator.pop(context, {
+      'location': _locationController.text = '',
+      'language': _languageController.text = '',
+      'followers': int.tryParse(_followersController.text) ?? 0,
+      'repos': int.tryParse(_reposController.text) ?? 0,
+    });
+  }
+
   void _applyFilters() {
     Navigator.pop(context, {
       'location': _locationController.text,
@@ -94,9 +103,18 @@ class _FilterScreenState extends State<FilterScreen> {
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _applyFilters,
-              child: Text('Aplicar Filtros'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: _clearFilters,
+                  child: Text('Limpar Filtros'),
+                ),
+                ElevatedButton(
+                  onPressed: _applyFilters,
+                  child: Text('Aplicar Filtros'),
+                ),
+              ],
             ),
           ],
         ),
